@@ -1,3 +1,2 @@
 # sails_websocket_tests
-
-a [Sails](http://sailsjs.org) application
+Tests for websocket functionality and applicability in mobile app project.
