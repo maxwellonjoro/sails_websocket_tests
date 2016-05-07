@@ -101,7 +101,9 @@ module.exports = {
                         // process WebSocket message
                         countNoOfPhoneRequests++;
                         console.log(countNoOfPhoneRequests+"Message: "+message.utf8Data);
-                        connection.send(countNoOfPhoneRequests+" messages");
+                        message.utf8Data.msgNo = countNoOfPhoneRequests;
+                        console.log(message.utf8Data);
+                        connection.send(message.utf8Data);
                     }
                 });
 
