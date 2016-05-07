@@ -91,6 +91,7 @@ module.exports = {
 
             // WebSocket server
             wsServer.on('request', function(request) {
+                countNoOfPhoneRequests = 0;
                 var connection = request.accept(null, request.origin);
 
                 // This is the most important callback for us, we'll handle
