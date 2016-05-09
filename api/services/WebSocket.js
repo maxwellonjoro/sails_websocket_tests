@@ -7,13 +7,6 @@
 var countNoOfPhoneRequests = 0;
 
 module.exports = {
-       testJSON: function () {
-            var orig_json = {};
-            orig_json.max = "Max";
-            orig_json.age = "19";
-            orig_json.online = true;
-            console.log(orig_json);
-        },
         createWSNode:function(){
             var WebSocketServer = require('websocket').server;
             var http = require('http');
@@ -31,18 +24,18 @@ module.exports = {
 
             // WebSocket server
             wsServer.on('request', function(request) {
+                console.log("Client connected");
                 countNoOfPhoneRequests = 0;
                 var connection = request.accept(null, request.origin);
-
-                // This is the most important callback for us, we'll handle
-                // all messages from users here.
+                connection.countNoOfPhoneRequests = 0;
+                
                 connection.on('message', function(message) {
                     if (message.type === 'utf8') {
                         // process WebSocket message
                         var json_obj = JSON.parse(message.utf8Data);
                         console.log(json_obj);
-                        countNoOfPhoneRequests++;
-                        json_obj.msgNo = countNoOfPhoneRequests;
+                        connection.countNoOfPhoneRequests++;
+                        json_obj.msgNo = connection.countNoOfPhoneRequests;
                         console.log(json_obj);
                         connection.send(JSON.stringify(json_obj));
                     }
@@ -50,7 +43,7 @@ module.exports = {
 
                 connection.on('close', function(connection) {
                     // close user connection
-                    console.log("Connection closed");
+                    console.log("Connection closed...");
                 });
             });
         }
